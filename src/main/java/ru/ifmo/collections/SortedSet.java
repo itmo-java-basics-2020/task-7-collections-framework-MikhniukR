@@ -33,11 +33,11 @@ public class SortedSet<T> extends AbstractSet<T> {
     private static final Object EXISTS = new Object();
     private TreeMap<T, Object> contents;
 
-    public SortedSet() {
+    private SortedSet() {
         this.contents = new TreeMap<>();
     }
 
-    public SortedSet(Comparator<T> comparator) {
+    private SortedSet(Comparator<T> comparator) {
         if (comparator == null) {
             throw new IllegalArgumentException("Comparator shouldn't be null");
         }
