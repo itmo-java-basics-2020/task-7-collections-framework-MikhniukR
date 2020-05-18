@@ -1,9 +1,7 @@
 package ru.ifmo.collections;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.PriorityQueue;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 /**
@@ -22,9 +20,7 @@ public class KthLargest {
             throw new IllegalArgumentException("k should be not less than numbers.length");
         }
 
-        queue = Arrays.stream(numbers).boxed()
-                .collect(Collectors.toCollection(PriorityQueue::new));
-
+        queue = Arrays.stream(numbers).boxed().collect(Collectors.toCollection(PriorityQueue::new));
         while (queue.size() > k) {
             queue.poll();
         }

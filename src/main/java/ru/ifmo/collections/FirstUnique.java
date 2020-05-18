@@ -1,9 +1,9 @@
 package ru.ifmo.collections;
 
 import java.util.ArrayDeque;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Queue;
-import java.util.Set;
 
 /**
  * Design a class which contains integers and returns first unique integer (in order of addition).
@@ -11,13 +11,15 @@ import java.util.Set;
  */
 public class FirstUnique {
 
-    private Set<Integer> unique;
-    private Set<Integer> noUnique;
+    private Map<Integer, Integer> count;
     private Queue<Integer> order;
 
     public FirstUnique(int[] numbers) {
-        unique = new HashSet<>();
-        noUnique = new HashSet<>();
+        if (numbers == null) {
+            throw new IllegalArgumentException("Array shouldn't be null");
+        }
+
+        count = new HashMap<>();
         order = new ArrayDeque<>();
 
         for (int number : numbers) {
@@ -27,7 +29,7 @@ public class FirstUnique {
 
     public int showFirstUnique() {
         while (!order.isEmpty()) {
-            if (noUnique.contains(order.element())) {
+            if (count.get(order.element()) > 1) {
                 order.poll();
             } else {
                 return order.element();
@@ -38,12 +40,7 @@ public class FirstUnique {
     }
 
     public void add(int value) {
-        if (!unique.contains(value)) {
-            unique.add(value);
-            order.add(value);
-        } else {
-            unique.remove(value);
-            noUnique.add(value);
-        }
+        count.merge(value, 1, Integer::sum);
+        order.add(value);
     }
 }
